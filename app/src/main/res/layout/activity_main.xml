@@ -1,35 +1,169 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+<!-- activity_main.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-            android:layout_height="wrap_content"
+    <ScrollView
             android:layout_width="match_parent"
-            android:theme="@style/Theme.Epcisevents.AppBarOverlay">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/Theme.Epcisevents.PopupOverlay"
-                android:layout_height="?attr/actionBarSize"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Event Type"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
 
-    <include layout="@layout/content_main"/>
+            <EditText
+                    android:id="@+id/edit_text_event_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Event Type"
+                    android:textSize="16sp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ID"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <EditText
+                    android:id="@+id/edit_text_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ID"
+                    android:textSize="16sp" />
+            <Button
+                    android:id="@+id/button_generate_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Generate ID"
+                    android:textSize="14sp"
+                    android:textColor="#FFFFFF"
+                    android:background="#000000"
+                    android:padding="12dp"
+                    android:layout_marginLeft="16dp" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Event Time"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <EditText
+                    android:id="@+id/edit_text_event_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Event Time"
+                    android:textSize="16sp" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Record Time"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <EditText
+                    android:id="@+id/edit_text_record_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Record Time"
+                    android:textSize="16sp" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Read Point"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <EditText
+                    android:id="@+id/edit_text_read_point"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Read Point"
+                    android:textSize="16sp" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Business Location"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <EditText
+                    android:id="@+id/edit_text_business_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Business Location"
+                    android:textSize="16sp" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Business Step"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <EditText
+                    android:id="@+id/edit_text_business_step"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Business Step"
+                    android:textSize="16sp" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Disposition"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <EditText
+                    android:id="@+id/edit_text_disposition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Disposition"
+                    android:textSize="16sp" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Extensions"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <EditText
+                    android:id="@+id/edit_text_extensions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Extensions"
+                    android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+            android:id="@+id/button_generate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="16dp"
-            app:srcCompat="@android:drawable/ic_dialog_email"/>
+            android:text="Save"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="#000000"
+            android:padding="12dp"
+            android:layout_margin="16dp"
+            android:layout_gravity="center_horizontal" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
