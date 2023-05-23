@@ -56,21 +56,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     private void transformToUUID() {
         // Retrieve the ID input from the EditText
         String id = idEditText.getText().toString();
-
-        // Transform the ID input to a UUID format
-        try {
-            UUID uuid = UUID.fromString(id);
-            String uuidString = uuid.toString();
-            idEditText.setText(uuidString);
-        } catch (IllegalArgumentException e) {
-            showToast("Invalid ID format. Please enter a valid Integer value.");
+        // Check if the ID input is empty
+        if (!id.isEmpty()) {
+            try {
+                // Parse the ID input as an integer
+                int parsedId = Integer.parseInt(id);
+                // Generate a UUID based on the parsed integer
+                UUID uuid = new UUID(parsedId, 0);
+                String uuidString = uuid.toString();
+                idEditText.setText(uuidString);
+            } catch (NumberFormatException e) {
+                showToast("Invalid ID format. Please enter a valid integer value.");
+            }
+        } else {
+            showToast("ID field is empty. Please enter a value before transforming.");
         }
     }
-
     private void generateEPCISEvent() {
         // Retrieve user input from EditText fields
         String eventType = eventTypeEditText.getText().toString();
@@ -99,13 +103,11 @@ public class MainActivity extends AppCompatActivity {
             showToast("Error occurred while saving the XML file.");
         }
     }
-
     private String generateXMLContent(String eventType, String id, String eventTime, String recordTime, String readPoint, String businessLocation, String businessStep,
                                       String disposition, String extensions) {
         String xmlTemplate = "<epcisEvent><eventType>%s</eventType><id>%s</id><eventTime>%s</eventTime><recordTime>%s</recordTime><readPoint>%s</readPoint><businessLocation>%s</businessLocation><businessStep>%s</businessStep><disposition>%s</disposition><extensions>%s</extensions></epcisEvent>";
         return String.format(xmlTemplate, eventType, id, eventTime, recordTime, readPoint, businessLocation, businessStep, disposition, extensions);
     }
-
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
