@@ -1,17 +1,19 @@
 package com.example.epcis_events;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
-
-import java.util.UUID;
-
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 if (isInputValid()) {
                     // All fields have valid input, proceed with saving
-                    saveData();
                     Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
                     startActivity(intent);
                 } else {
@@ -114,9 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             showToast("Error occurred while saving the XML file.");
         }
     }
-    private void saveData() {
-            //add ObjectBox here
-    }
     private boolean isInputValid() {
         // Check if all fields have non-empty input
         return !eventTypeSpinner.getSelectedItem().toString().isEmpty()
@@ -132,13 +130,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onClick(View v) {
+        Context context;
+        //Event event = new Event();
         if (v.getId() == R.id.button_generate_id) {
             // Handle generate ID button click
         } else if (v.getId() == R.id.button_save) {
             // Handle save button click
             if (isInputValid()) {
                 // All fields have valid input, proceed with saving
-                saveData();//implement the objectbox in this Method/class
+                /* ObjectBoxManager objectBoxManager = ObjectBoxManager.getInstance(context);
+
+                // Get the Event Box
+                Box<Event> eventBox = objectBoxManager.getEventBox();
+
+                // Create a new event object
+                event.setEventType(eventTypeSpinner.getSelectedItem().toString());
+                event.setAction(eventActionSpinner.getSelectedItem().toString());
+                event.setEventTime(eventTimeEditText.getText().toString());
+                event.setRecordTime(recordTimeEditText.getText().toString());
+                event.setReadPoint(readPointEditText.getText().toString());
+                event.setBusinessLocation(businessLocationEditText.getText().toString());
+                event.setBusinessStep(businessStepEditText.getText().toString());
+                event.setDisposition(dispositionEditText.getText().toString());
+                event.setExtensions(extensionsEditText.getText().toString());
+                // Save the event to ObjectBox
+                eventBox.put(event);*/
                 Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
                 startActivity(intent);
             } else {
