@@ -1,10 +1,10 @@
 package com.example.epcis_events;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
+
 import java.util.UUID;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +13,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText eventTypeEditText;
+    private Spinner eventTypeSpinner;
+    private Spinner eventActionSpinner;
     private EditText idEditText;
     private EditText eventTimeEditText;
     private EditText recordTimeEditText;
@@ -30,29 +31,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        eventTypeEditText = findViewById(R.id.edit_text_event_type);
+        eventTypeSpinner = findViewById(R.id.spinner_event_type);
+        eventActionSpinner = findViewById(R.id.spinner_event_action);
         idEditText = findViewById(R.id.edit_text_id);
         eventTimeEditText = findViewById(R.id.edit_text_event_time);
         recordTimeEditText = findViewById(R.id.edit_text_record_time);
         readPointEditText = findViewById(R.id.edit_text_read_point);
         businessLocationEditText = findViewById(R.id.edit_text_business_location);
-        businessStepEditText = findViewById(R.id.edit_text_business_location);
-        dispositionEditText = findViewById(R.id.edit_text_business_location);
-        extensionsEditText = findViewById(R.id.edit_text_business_location);
+        businessStepEditText = findViewById(R.id.edit_text_business_step);
+        dispositionEditText = findViewById(R.id.edit_text_disposition);
+        extensionsEditText = findViewById(R.id.edit_text_extensions);
 
-        Button generateButton = findViewById(R.id.button_generate);
-        generateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                generateEPCISEvent();
-            }
-        });
         // Initialize the Generate ID button
         Button generateIdButton = findViewById(R.id.button_generate_id);
         generateIdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 transformToUUID();
+            }
+        });
+        Button saveButton = findViewById(R.id.button_save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isInputValid()) {
+                    // All fields have valid input, proceed with saving
+                    saveData();
+                    Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
+                    startActivity(intent);
+                } else {
+                    // Display an error message or highlight the fields with invalid input
+                    Toast.makeText(MainActivity.this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -77,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void generateEPCISEvent() {
         // Retrieve user input from EditText fields
-        String eventType = eventTypeEditText.getText().toString();
+        String eventType = eventTypeSpinner.getSelectedItem().toString();
+        String action = eventActionSpinner.getSelectedItem().toString();
         String id = idEditText.getText().toString();
         String eventTime = eventTimeEditText.getText().toString();
         String recordTime = recordTimeEditText.getText().toString();
@@ -89,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         // Retrieve other input fields accordingly
 
         // Generate the XML content using the retrieved input values
-        String xmlContent = generateXMLContent(eventType, id, eventTime, recordTime, readPoint, businessLocation, businessStep, disposition, extensions);
+        String xmlContent = generateXMLContent(eventType, id, action,eventTime, recordTime, readPoint, businessLocation, businessStep, disposition, extensions);
 
         // Save the XML content to a file (e.g., locally on the device's storage)
         try {
@@ -103,10 +114,43 @@ public class MainActivity extends AppCompatActivity {
             showToast("Error occurred while saving the XML file.");
         }
     }
-    private String generateXMLContent(String eventType, String id, String eventTime, String recordTime, String readPoint, String businessLocation, String businessStep,
+    private void saveData() {
+            //add ObjectBox here
+    }
+    private boolean isInputValid() {
+        // Check if all fields have non-empty input
+        return !eventTypeSpinner.getSelectedItem().toString().isEmpty()
+                && !eventActionSpinner.getSelectedItem().toString().isEmpty()
+                && !idEditText.getText().toString().isEmpty()
+                && !eventTimeEditText.getText().toString().isEmpty()
+                && !recordTimeEditText.getText().toString().isEmpty()
+                && !readPointEditText.getText().toString().isEmpty()
+                && !businessLocationEditText.getText().toString().isEmpty()
+                && !businessStepEditText.getText().toString().isEmpty()
+                && !dispositionEditText.getText().toString().isEmpty()
+                && !extensionsEditText.getText().toString().isEmpty();
+    }
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.button_generate_id) {
+            // Handle generate ID button click
+        } else if (v.getId() == R.id.button_save) {
+            // Handle save button click
+            if (isInputValid()) {
+                // All fields have valid input, proceed with saving
+                saveData();//implement the objectbox in this Method/class
+                Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
+                startActivity(intent);
+            } else {
+                // Display an error message or highlight the fields with invalid input
+                Toast.makeText(this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    private String generateXMLContent(String eventType, String id, String action, String eventTime, String recordTime, String readPoint, String businessLocation, String businessStep,
                                       String disposition, String extensions) {
-        String xmlTemplate = "<epcisEvent><eventType>%s</eventType><id>%s</id><eventTime>%s</eventTime><recordTime>%s</recordTime><readPoint>%s</readPoint><businessLocation>%s</businessLocation><businessStep>%s</businessStep><disposition>%s</disposition><extensions>%s</extensions></epcisEvent>";
-        return String.format(xmlTemplate, eventType, id, eventTime, recordTime, readPoint, businessLocation, businessStep, disposition, extensions);
+        String xmlTemplate = "<epcisEvent><eventType>%s</eventType><id>%s</id><action>%s</action><eventTime>%s</eventTime><recordTime>%s</recordTime><readPoint>%s</readPoint><businessLocation>%s</businessLocation><businessStep>%s</businessStep><disposition>%s</disposition><extensions>%s</extensions></epcisEvent>";
+        return String.format(xmlTemplate, eventType, id, action, eventTime, recordTime, readPoint, businessLocation, businessStep, disposition, extensions);
     }
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
