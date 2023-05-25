@@ -1,6 +1,5 @@
 package com.example.epcis_events;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,13 +8,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import io.objectbox.Box;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     private Spinner eventTypeSpinner;
     private Spinner eventActionSpinner;
@@ -27,11 +27,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText businessStepEditText;
     private EditText dispositionEditText;
     private EditText extensionsEditText;
+    private ObjectBoxManager objectBoxManager;
+    private Box<Event> eventBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        objectBoxManager = ObjectBoxManager.getInstance(this);
+        //objectBoxManager.initialize(this);
+        eventBox = objectBoxManager.getEventBox();
 
         eventTypeSpinner = findViewById(R.id.spinner_event_type);
         eventActionSpinner = findViewById(R.id.spinner_event_action);
@@ -58,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 if (isInputValid()) {
                     // All fields have valid input, proceed with saving
+                    Event event = createEventObject();
+                    eventBox.put(event);
+                    showToast("Event saved successfully!");
                     Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
                     startActivity(intent);
                 } else {
@@ -128,16 +137,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 && !dispositionEditText.getText().toString().isEmpty()
                 && !extensionsEditText.getText().toString().isEmpty();
     }
-    @Override
+    /*@Override
     public void onClick(View v) {
-        Context context;
-        Event event = new Event();
         if (v.getId() == R.id.button_generate_id) {
-            // Handle generate ID button click
+            transformToUUID();
         } else if (v.getId() == R.id.button_save) {
             // Handle save button click
             if (isInputValid()) {
                 // All fields have valid input, proceed with saving
+                Event event = createEventObject();
+                eventBox.put(event);
+                showToast("Event saved successfully!");
                 Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
                 startActivity(intent);
             } else {
@@ -145,12 +155,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
     private Event createEventObject() {
         Event event = new Event();
         event.setEventType(eventTypeSpinner.getSelectedItem().toString());
         event.setAction(eventActionSpinner.getSelectedItem().toString());
-        event.setId(idEditText.getId());
+        // Set the ID to 0 for inserting a new entity
+        event.setId(0);
         event.setEventTime(eventTimeEditText.getText().toString());
         event.setRecordTime(recordTimeEditText.getText().toString());
         event.setReadPoint(readPointEditText.getText().toString());
@@ -166,6 +177,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return String.format(xmlTemplate, eventType, id, action, eventTime, recordTime, readPoint, businessLocation, businessStep, disposition, extensions);
     }
     private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

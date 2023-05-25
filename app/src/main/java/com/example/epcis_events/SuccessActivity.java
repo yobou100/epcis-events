@@ -3,8 +3,8 @@ package com.example.epcis_events;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SuccessActivity extends AppCompatActivity {
 
@@ -25,6 +25,6 @@ public class SuccessActivity extends AppCompatActivity {
         });
         // Display the success message
         TextView messageTextView = findViewById(R.id.text_success_message);
-        messageTextView.setText("The event has been saved correctly.");
+        messageTextView.setText("The event has been saved successfully!");
     }
 }
