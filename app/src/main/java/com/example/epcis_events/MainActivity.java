@@ -131,30 +131,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Context context;
-        //Event event = new Event();
+        Event event = new Event();
         if (v.getId() == R.id.button_generate_id) {
             // Handle generate ID button click
         } else if (v.getId() == R.id.button_save) {
             // Handle save button click
             if (isInputValid()) {
                 // All fields have valid input, proceed with saving
-                /* ObjectBoxManager objectBoxManager = ObjectBoxManager.getInstance(context);
-
-                // Get the Event Box
-                Box<Event> eventBox = objectBoxManager.getEventBox();
-
-                // Create a new event object
-                event.setEventType(eventTypeSpinner.getSelectedItem().toString());
-                event.setAction(eventActionSpinner.getSelectedItem().toString());
-                event.setEventTime(eventTimeEditText.getText().toString());
-                event.setRecordTime(recordTimeEditText.getText().toString());
-                event.setReadPoint(readPointEditText.getText().toString());
-                event.setBusinessLocation(businessLocationEditText.getText().toString());
-                event.setBusinessStep(businessStepEditText.getText().toString());
-                event.setDisposition(dispositionEditText.getText().toString());
-                event.setExtensions(extensionsEditText.getText().toString());
-                // Save the event to ObjectBox
-                eventBox.put(event);*/
                 Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
                 startActivity(intent);
             } else {
@@ -162,6 +145,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    private Event createEventObject() {
+        Event event = new Event();
+        event.setEventType(eventTypeSpinner.getSelectedItem().toString());
+        event.setAction(eventActionSpinner.getSelectedItem().toString());
+        event.setId(idEditText.getId());
+        event.setEventTime(eventTimeEditText.getText().toString());
+        event.setRecordTime(recordTimeEditText.getText().toString());
+        event.setReadPoint(readPointEditText.getText().toString());
+        event.setBusinessLocation(businessLocationEditText.getText().toString());
+        event.setBusinessStep(businessStepEditText.getText().toString());
+        event.setDisposition(dispositionEditText.getText().toString());
+        event.setExtensions(extensionsEditText.getText().toString());
+        return event;
     }
     private String generateXMLContent(String eventType, String id, String action, String eventTime, String recordTime, String readPoint, String businessLocation, String businessStep,
                                       String disposition, String extensions) {
