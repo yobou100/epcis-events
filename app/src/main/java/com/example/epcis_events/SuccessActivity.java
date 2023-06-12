@@ -1,5 +1,6 @@
 package com.example.epcis_events;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,10 @@ public class SuccessActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Finish the current activity to go back
                 finish();
+                // Clear the input fields and go back to MainActivity
+                Intent intent = new Intent(SuccessActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         // Display the success message

@@ -13,9 +13,13 @@ public class Event {
     private String action;
     private String eventTime;
     private String recordTime;
+    private String epcs;
     private String readPoint;
     private String businessLocation;
     private String businessStep;
+    private String bizTransactions;
+    private String sources;
+    private String destinations;
     private String disposition;
     private String extensions;
 
@@ -106,5 +110,33 @@ public class Event {
 
     public void setExtensions(String extensions) {
         this.extensions = extensions;
+    }
+    public String getBizTransactions() {
+        return bizTransactions;
+    }
+
+    public void setBizTransactions(String bizTransactions) {
+        this.bizTransactions = bizTransactions;
+    }
+    public String getSources() {
+        return sources;
+    }
+
+    public void setSources(String sources) {
+        this.sources = sources;
+    }
+    public String getDestinations() {
+        return destinations;
+    }
+
+    public void setDestinations(String destinations) {
+        this.destinations = destinations;
+    }
+    public String getEpcs() {
+        return epcs;
+    }
+
+    public void setEpcs(String epcs) {
+        this.epcs = epcs;
     }
 }

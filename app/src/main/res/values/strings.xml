@@ -9,6 +9,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
     <string name="event_type_prompt">Select Event Type</string>
         <string-array name="event_types">
             <item>Select Event Type</item>
@@ -18,11 +19,26 @@
             <item>TransactionEvent</item>
             <item>QuantityEvent</item>
         </string-array>
+
     <string name="event_action_prompt">Select Event Type</string>
     <string-array name="event_action">
         <item>Select Action</item>
         <item>ADD</item>
         <item>OBSERVE</item>
         <item>DELETE</item>
+    </string-array>
+    <string name="event_epc_prompt">Select EPC</string>
+    <string-array name="epcs">
+        <item>Select EPC</item>
+        <item>EPC 1</item>
+        <item>EPC 2</item>
+        <item>EPC 3</item>
+    </string-array>
+    <string name="event_quantity_prompt">Select EPC</string>
+    <string-array name="quantities">
+        <item>Select EPC</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 </resources>

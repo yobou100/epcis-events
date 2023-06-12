@@ -14,48 +14,75 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-            <TextView
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Event Type"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
+                    android:background="#F0F0F0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <Spinner
-                    android:id="@+id/spinner_event_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:prompt="@string/event_type_prompt"
-                    android:textSize="16sp"
-                    android:entries="@array/event_types"/>
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Action"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Event Type"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
 
-            <Spinner
-                    android:id="@+id/spinner_event_action"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:prompt="@string/event_action_prompt"
-                    android:textSize="16sp"
-                    android:entries="@array/event_action"/>
+                <Spinner
+                        android:id="@+id/spinner_event_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:prompt="@string/event_type_prompt"
+                        android:textSize="16sp"
+                        android:entries="@array/event_types" />
 
-            <TextView
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ID"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
+                    android:background="#F0F0F0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <EditText
-                    android:id="@+id/edit_text_id"
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Action"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <Spinner
+                        android:id="@+id/spinner_event_action"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:prompt="@string/event_action_prompt"
+                        android:textSize="16sp"
+                        android:entries="@array/event_action" />
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ID"
-                    android:textSize="16sp" />
+                    android:background="#F0F0F0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ID"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="ID"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
             <Button
                     android:id="@+id/button_generate_id"
                     android:layout_width="wrap_content"
@@ -67,103 +94,291 @@
                     android:padding="12dp"
                     android:layout_marginLeft="16dp" />
 
-            <TextView
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Event Time"
+                    android:background="#D1C4E9"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Event Time"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_event_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Event Time"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#D1C4E9"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Record Time"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_record_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Record Time"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ADD8E6"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+             <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="EPCs"
                     android:textSize="18sp"
                     android:textColor="#000000" />
-
-            <EditText
-                    android:id="@+id/edit_text_event_time"
+            </LinearLayout>
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ADD8E6"
+                android:orientation="horizontal"
+                android:padding="8dp">
+                <Spinner
+                    android:id="@+id/spinner_epcs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Event Time"
-                    android:textSize="16sp" />
+                    android:prompt="@string/event_epc_prompt"
+                    android:textSize="16sp"
+                    android:entries="@array/epcs"/>
+              </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ADD8E6"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Record Time"
+                    android:text="Quantities"
                     android:textSize="18sp"
                     android:textColor="#000000" />
-
-            <EditText
-                    android:id="@+id/edit_text_record_time"
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Record Time"
-                    android:textSize="16sp" />
-
-            <TextView
+                    android:background="#ADD8E6"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+             <Spinner
+                    android:id="@+id/spinner_quantities"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Read Point"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
-
-            <EditText
-                    android:id="@+id/edit_text_read_point"
+                    android:prompt="@string/event_quantity_prompt"
+                    android:textSize="16sp"
+                    android:entries="@array/quantities"/>
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Read Point"
-                    android:textSize="16sp" />
+                    android:background="#90EE90"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <TextView
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Read Point"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_read_point"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Read Point"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Business Location"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
+                    android:background="#90EE90"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <EditText
-                    android:id="@+id/edit_text_business_location"
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Buisness Location"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_business_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Buisness Location"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Business Location"
-                    android:textSize="16sp" />
+                    android:background="#FFFFE0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <TextView
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Buisness Step"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_business_step"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Buisness Step"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Business Step"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
+                    android:background="#FFFFE0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <EditText
-                    android:id="@+id/edit_text_business_step"
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Disposition"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_disposition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Disposition"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Business Step"
-                    android:textSize="16sp" />
+                    android:background="#FFFFE0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <TextView
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Biz Transactions"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_biz_transactions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Biz Transactions"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Disposition"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
+                    android:background="#FFFFE0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <EditText
-                    android:id="@+id/edit_text_disposition"
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sources"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_sources"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sources"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Disposition"
-                    android:textSize="16sp" />
+                    android:background="#FFFFE0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <TextView
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Destinations"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_destinations"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Destinations"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Extensions"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
+                    android:background="#FFFFE0"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-            <EditText
-                    android:id="@+id/edit_text_extensions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Extensions"
-                    android:textSize="16sp" />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Extensions"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <EditText
+                        android:id="@+id/edit_text_extensions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Extensions"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

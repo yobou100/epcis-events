@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner eventTypeSpinner;
     private Spinner eventActionSpinner;
+    private Spinner eventEPCS;
+    private Spinner eventQuantities;
     private EditText idEditText;
     private EditText eventTimeEditText;
     private EditText recordTimeEditText;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText businessLocationEditText;
     private EditText businessStepEditText;
     private EditText dispositionEditText;
+    private EditText bizTransactionEditText;
+    private EditText sourcesEditText;
+    private EditText destinationsEditText;
+
     private EditText extensionsEditText;
     private ObjectBoxManager objectBoxManager;
     private Box<Event> eventBox;
@@ -44,11 +50,16 @@ public class MainActivity extends AppCompatActivity {
         idEditText = findViewById(R.id.edit_text_id);
         eventTimeEditText = findViewById(R.id.edit_text_event_time);
         recordTimeEditText = findViewById(R.id.edit_text_record_time);
+        eventEPCS = findViewById(R.id.spinner_epcs);
+        eventQuantities = findViewById(R.id.spinner_quantities);
         readPointEditText = findViewById(R.id.edit_text_read_point);
         businessLocationEditText = findViewById(R.id.edit_text_business_location);
         businessStepEditText = findViewById(R.id.edit_text_business_step);
         dispositionEditText = findViewById(R.id.edit_text_disposition);
         extensionsEditText = findViewById(R.id.edit_text_extensions);
+        bizTransactionEditText = findViewById(R.id.edit_text_biz_transactions);
+        sourcesEditText = findViewById(R.id.edit_text_sources);
+        destinationsEditText = findViewById(R.id.edit_text_destinations);
 
         // Initialize the Generate ID button
         Button generateIdButton = findViewById(R.id.button_generate_id);
@@ -102,15 +113,20 @@ public class MainActivity extends AppCompatActivity {
         String id = idEditText.getText().toString();
         String eventTime = eventTimeEditText.getText().toString();
         String recordTime = recordTimeEditText.getText().toString();
+        String epcs = eventEPCS.getSelectedItem().toString();
+        String quantities = eventQuantities.getSelectedItem().toString();
         String readPoint = readPointEditText.getText().toString();
         String businessLocation = businessLocationEditText.getText().toString();
         String businessStep = businessStepEditText.getText().toString();
+        String bizTransaction = bizTransactionEditText.getText().toString();
+        String sources = sourcesEditText.getText().toString();
+        String destinations = destinationsEditText.getText().toString();
         String disposition = dispositionEditText.getText().toString();
         String extensions = extensionsEditText.getText().toString();
         // Retrieve other input fields accordingly
 
         // Generate the XML content using the retrieved input values
-        String xmlContent = generateXMLContent(eventType, id, action,eventTime, recordTime, readPoint, businessLocation, businessStep, disposition, extensions);
+        String xmlContent = generateXMLContent(eventType, id, action,eventTime, recordTime, epcs, quantities, readPoint, businessLocation, businessStep, bizTransaction, sources, destinations, disposition, extensions);
 
         // Save the XML content to a file (e.g., locally on the device's storage)
         try {
@@ -134,6 +150,9 @@ public class MainActivity extends AppCompatActivity {
                 && !readPointEditText.getText().toString().isEmpty()
                 && !businessLocationEditText.getText().toString().isEmpty()
                 && !businessStepEditText.getText().toString().isEmpty()
+                && !bizTransactionEditText.getText().toString().isEmpty()
+                && !sourcesEditText.getText().toString().isEmpty()
+                && !destinationsEditText.getText().toString().isEmpty()
                 && !dispositionEditText.getText().toString().isEmpty()
                 && !extensionsEditText.getText().toString().isEmpty();
     }
@@ -164,19 +183,25 @@ public class MainActivity extends AppCompatActivity {
         event.setId(0);
         event.setEventTime(eventTimeEditText.getText().toString());
         event.setRecordTime(recordTimeEditText.getText().toString());
+        event.setEpcs(eventEPCS.getSelectedItem().toString());
+        event.setEpcs(eventQuantities.getSelectedItem().toString());
         event.setReadPoint(readPointEditText.getText().toString());
         event.setBusinessLocation(businessLocationEditText.getText().toString());
         event.setBusinessStep(businessStepEditText.getText().toString());
+        event.setBizTransactions(bizTransactionEditText.getText().toString());
+        event.setSources(sourcesEditText.getText().toString());
+        event.setDestinations(destinationsEditText.getText().toString());
         event.setDisposition(dispositionEditText.getText().toString());
         event.setExtensions(extensionsEditText.getText().toString());
         return event;
     }
-    private String generateXMLContent(String eventType, String id, String action, String eventTime, String recordTime, String readPoint, String businessLocation, String businessStep,
-                                      String disposition, String extensions) {
-        String xmlTemplate = "<epcisEvent><eventType>%s</eventType><id>%s</id><action>%s</action><eventTime>%s</eventTime><recordTime>%s</recordTime><readPoint>%s</readPoint><businessLocation>%s</businessLocation><businessStep>%s</businessStep><disposition>%s</disposition><extensions>%s</extensions></epcisEvent>";
-        return String.format(xmlTemplate, eventType, id, action, eventTime, recordTime, readPoint, businessLocation, businessStep, disposition, extensions);
+    private String generateXMLContent(String eventType, String id, String action, String eventTime, String recordTime, String epcs, String quantities, String readPoint, String businessLocation, String businessStep,
+                                      String bizTransaction, String sources, String destinations, String disposition, String extensions) {
+        String xmlTemplate = "<epcisEvent><eventType>%s</eventType><id>%s</id><action>%s</action><eventTime>%s</eventTime><recordTime>%s</recordTime><epcs>%s</epcs><quantities>%s</quantities><readPoint>%s</readPoint><businessLocation>%s</businessLocation><businessStep>%s</businessStep><bizTransaction>%s</bizTransaction><sources>%s</sources><destinations>%s</destinations><disposition>%s</disposition><extensions>%s</extensions></epcisEvent>";
+        return String.format(xmlTemplate, eventType, id, action, eventTime, recordTime, epcs, quantities, readPoint, businessLocation, businessStep, disposition, extensions);
     }
     private void showToast(String message) {
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
     }
+
 }
