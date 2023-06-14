@@ -63,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize the Generate ID button
         Button generateIdButton = findViewById(R.id.button_generate_id);
+
+        Button cancelButton = findViewById(R.id.button_cancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                startActivity(intent);
+                finish(); // Optional: Call finish() to close the MainActivity and prevent it from being shown when the user presses the back button
+            }
+        });
         generateIdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         Event event = new Event();
         event.setEventType(eventTypeSpinner.getSelectedItem().toString());
         event.setAction(eventActionSpinner.getSelectedItem().toString());
-        // Set the ID to 0 for inserting a new entity
+        // Set the ID to 0 for the case of inserting a new entity
         event.setId(0);
         event.setEventTime(eventTimeEditText.getText().toString());
         event.setRecordTime(recordTimeEditText.getText().toString());

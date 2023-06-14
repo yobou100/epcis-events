@@ -394,5 +394,16 @@
             android:padding="12dp"
             android:layout_margin="16dp"
             android:layout_gravity="center_horizontal" />
+    <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="#000000"
+            android:padding="12dp"
+            android:layout_margin="16dp"
+            android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

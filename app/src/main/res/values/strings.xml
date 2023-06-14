@@ -30,11 +30,14 @@
     <string name="event_epc_prompt">Select EPC</string>
     <string-array name="epcs">
         <item>Select EPC</item>
-        <item>EPC 1</item>
-        <item>EPC 2</item>
-        <item>EPC 3</item>
+        <item>SGTIN</item>
+        <item>SSCC</item>
+        <item>GRAI</item>
+        <item>GIAI</item>
+        <item>GSRN</item>
+        <item>GSRNP</item>
     </string-array>
-    <string name="event_quantity_prompt">Select EPC</string>
+    <string name="event_quantity_prompt">Select Quantity</string>
     <string-array name="quantities">
         <item>Select EPC</item>
         <item>1</item>
