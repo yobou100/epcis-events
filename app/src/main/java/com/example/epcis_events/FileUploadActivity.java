@@ -33,7 +33,6 @@ public class FileUploadActivity extends AppCompatActivity {
                 finish(); // Optional: Call finish() to close the FileUploadActivity and prevent it from being shown when the user presses the back button
             }
         });
-
     }
 
 
@@ -52,6 +51,7 @@ public class FileUploadActivity extends AppCompatActivity {
             Uri fileUri = data.getData();
             // Perform further operations with the selected file
             // For example, you can upload the file to a server or process it in some way
+
         }
     }
 }

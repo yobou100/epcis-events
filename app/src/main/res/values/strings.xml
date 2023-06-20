@@ -36,12 +36,19 @@
         <item>GIAI</item>
         <item>GSRN</item>
         <item>GSRNP</item>
+        <item>GID</item>
+        <item>ADI</item>
+        <item>BIC</item>
     </string-array>
     <string name="event_quantity_prompt">Select Quantity</string>
     <string-array name="quantities">
-        <item>Select EPC</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>Select Quantity</item>
+        <item>LGTIN</item>
+        <item>SGTIN</item>
+        <item>SSCC</item>
+        <item>GRAI</item>
+        <item>GIAI</item>
+        <item>GSRN</item>
+        <item>GSRNP</item>
     </string-array>
 </resources>

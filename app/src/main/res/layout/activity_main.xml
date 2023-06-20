@@ -142,54 +142,77 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ADD8E6"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-             <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="EPCs"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
-            </LinearLayout>
-              <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ADD8E6"
-                android:orientation="horizontal"
-                android:padding="8dp">
-                <Spinner
-                    android:id="@+id/spinner_epcs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:prompt="@string/event_epc_prompt"
-                    android:textSize="16sp"
-                    android:entries="@array/epcs"/>
-              </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ADD8E6"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-             <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Quantities"
-                    android:textSize="18sp"
-                    android:textColor="#000000" />
-            </LinearLayout>
-            <LinearLayout
+                    android:id="@+id/parent_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#ADD8E6"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EPCs"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <LinearLayout
+                        android:id="@+id/layout_epcs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ADD8E6"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+                    <Spinner
+                            android:id="@+id/spinner_epcs"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:prompt="@string/event_epc_prompt"
+                            android:textSize="16sp"
+                            android:entries="@array/epcs"/>
+
+                </LinearLayout>
+                <Button
+                        android:id="@+id/button_add_another"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Another"
+                        android:onClick="onAddAnotherClicked"/>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/parent_layout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ADD8E6"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quantities"
+                        android:textSize="18sp"
+                        android:textColor="#000000" />
+
+                <LinearLayout
+                        android:id="@+id/layout_quantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ADD8E6"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
              <Spinner
                     android:id="@+id/spinner_quantities"
                     android:layout_width="match_parent"
@@ -198,6 +221,15 @@
                     android:textSize="16sp"
                     android:entries="@array/quantities"/>
             </LinearLayout>
+            <Button
+                        android:id="@+id/button_add_another_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Another"
+                        android:onClick="onAddAnotherClicked_quantity"/>
+
+            </LinearLayout>
+
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -288,19 +320,34 @@
                         android:textSize="16sp" />
 
             </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/parent_layout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ADD8E6"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Biz Transactions"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+            <LinearLayout
+                    android:id="@+id/layout_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+            </LinearLayout>
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFE0"
+                    android:background="#ADD8E6"
                     android:orientation="horizontal"
                     android:padding="8dp">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Biz Transactions"
-                        android:textSize="18sp"
-                        android:textColor="#000000" />
 
                 <EditText
                         android:id="@+id/edit_text_biz_transactions"
@@ -308,14 +355,22 @@
                         android:layout_height="wrap_content"
                         android:hint="Biz Transactions"
                         android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                        android:id="@+id/button_add_another_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Another"
+                        android:onClick="onAddAnotherClicked_text"/>
 
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/parent_layout4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFE0"
-                    android:orientation="horizontal"
+                    android:background="#ADD8E6"
+                    android:orientation="vertical"
                     android:padding="8dp">
 
                 <TextView
@@ -325,20 +380,41 @@
                         android:textSize="18sp"
                         android:textColor="#000000" />
 
-                <EditText
-                        android:id="@+id/edit_text_sources"
+                <LinearLayout
+                        android:id="@+id/layout_text2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Sources"
-                        android:textSize="16sp" />
+                        android:orientation="vertical">
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ADD8E6"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                    <EditText
+                            android:id="@+id/edit_text_sources"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Sources"
+                            android:textSize="16sp" />
+                </LinearLayout>
+                <Button
+                        android:id="@+id/button_add_another_sources"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Another"
+                        android:onClick="onAddAnotherClicked_text"/>
 
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/parent_layout5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFE0"
-                    android:orientation="horizontal"
+                    android:background="#ADD8E6"
+                    android:orientation="vertical"
                     android:padding="8dp">
 
                 <TextView
@@ -348,20 +424,41 @@
                         android:textSize="18sp"
                         android:textColor="#000000" />
 
-                <EditText
-                        android:id="@+id/edit_text_destinations"
+                <LinearLayout
+                        android:id="@+id/layout_text3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Destinations"
-                        android:textSize="16sp" />
+                        android:orientation="vertical">
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ADD8E6"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                    <EditText
+                            android:id="@+id/edit_text_destinations"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Sources"
+                            android:textSize="16sp" />
+                </LinearLayout>
+                <Button
+                        android:id="@+id/button_add_another_destinations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Another"
+                        android:onClick="onAddAnotherClicked_text"/>
 
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/parent_layout6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFE0"
-                    android:orientation="horizontal"
+                    android:background="#ADD8E6"
+                    android:orientation="vertical"
                     android:padding="8dp">
 
                 <TextView
@@ -371,12 +468,32 @@
                         android:textSize="18sp"
                         android:textColor="#000000" />
 
+                <LinearLayout
+                        android:id="@+id/layout_text4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ADD8E6"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
                 <EditText
                         android:id="@+id/edit_text_extensions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Extensions"
                         android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                    android:id="@+id/button_add_another_extensions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Another"
+                    android:onClick="onAddAnotherClicked_text"/>
 
             </LinearLayout>
 

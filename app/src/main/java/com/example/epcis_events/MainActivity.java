@@ -1,18 +1,21 @@
 package com.example.epcis_events;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import io.objectbox.Box;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,10 +34,43 @@ public class MainActivity extends AppCompatActivity {
     private EditText bizTransactionEditText;
     private EditText sourcesEditText;
     private EditText destinationsEditText;
-
     private EditText extensionsEditText;
     private ObjectBoxManager objectBoxManager;
     private Box<Event> eventBox;
+    private void showDateTimePickerDialog(final EditText editText) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                        String selectedDateTime = dateFormat.format(calendar.getTime());
+
+                        editText.setText(selectedDateTime);
+                    }
+                }, hour, minute, DateFormat.is24HourFormat(MainActivity.this));
+
+                timePickerDialog.show();
+            }
+        }, year, month, day);
+
+        datePickerDialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         objectBoxManager = ObjectBoxManager.getInstance(this);
-        //objectBoxManager.initialize(this);
         eventBox = objectBoxManager.getEventBox();
 
         eventTypeSpinner = findViewById(R.id.spinner_event_type);
@@ -63,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize the Generate ID button
         Button generateIdButton = findViewById(R.id.button_generate_id);
-
         Button cancelButton = findViewById(R.id.button_cancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +126,97 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     // Display an error message or highlight the fields with invalid input
-                    Toast.makeText(MainActivity.this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please fill in all the mandatory fields.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        eventTimeEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateTimePickerDialog(eventTimeEditText);
+            }
+        });
+        recordTimeEditText.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){showDateTimePickerDialog(recordTimeEditText);}
+        });
+    }
+    //method for adding another epc
+    public void onAddAnotherClicked(View view) {
+        LinearLayout layout = findViewById(R.id.layout_epcs);
+
+        Spinner newSpinner = new Spinner(this);
+        newSpinner.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        newSpinner.setPrompt(getString(R.string.event_epc_prompt));
+        //newSpinner.setTextSize(16);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.epcs,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        newSpinner.setAdapter(adapter);
+
+        layout.addView(newSpinner);
+    }
+    //method for adding another quantity
+    public void onAddAnotherClicked_quantity(View view) {
+        LinearLayout layout = findViewById(R.id.layout_quantity);
+
+        Spinner newSpinner = new Spinner(this);
+        newSpinner.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        newSpinner.setPrompt(getString(R.string.event_quantity_prompt));
+        //newSpinner.setTextSize(16);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.quantities,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        newSpinner.setAdapter(adapter);
+
+        layout.addView(newSpinner);
+    }
+    //method for adding another Biz transaction,sources ...
+    public void onAddAnotherClicked_text(View view) {
+        LinearLayout layout = findViewById(R.id.layout_text);
+        LinearLayout layout2 = findViewById(R.id.layout_text2);
+        LinearLayout layout3 = findViewById(R.id.layout_text3);
+        LinearLayout layout4 = findViewById(R.id.layout_text4);
+
+        EditText editText = createNewEditText();
+
+        layout.addView(editText);
+
+        EditText editText2 = createNewEditText();
+
+        layout2.addView(editText2);
+
+        EditText editText3 = createNewEditText();
+
+        layout3.addView(editText3);
+
+        EditText editText4 = createNewEditText();
+
+        layout4.addView(editText4);
+    }
+
+    private EditText createNewEditText() {
+        EditText editText = new EditText(this);
+        editText.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        editText.setHint("Enter text");
+        editText.setTextSize(16);
+        return editText;
     }
     private void transformToUUID() {
         // Retrieve the ID input from the EditText
@@ -166,25 +287,6 @@ public class MainActivity extends AppCompatActivity {
                 && !dispositionEditText.getText().toString().isEmpty()
                 && !extensionsEditText.getText().toString().isEmpty();
     }
-    /*@Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.button_generate_id) {
-            transformToUUID();
-        } else if (v.getId() == R.id.button_save) {
-            // Handle save button click
-            if (isInputValid()) {
-                // All fields have valid input, proceed with saving
-                Event event = createEventObject();
-                eventBox.put(event);
-                showToast("Event saved successfully!");
-                Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
-                startActivity(intent);
-            } else {
-                // Display an error message or highlight the fields with invalid input
-                Toast.makeText(this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }*/
     private Event createEventObject() {
         Event event = new Event();
         event.setEventType(eventTypeSpinner.getSelectedItem().toString());
