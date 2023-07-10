@@ -9,7 +9,11 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import io.objectbox.Box;
+import io.objectbox.BoxStore;
+import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
 
+import javax.security.auth.callback.Callback;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +22,10 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+import static com.example.epcis_events.ObjectBox.get;
+
+public class MainActivity extends AppCompatActivity implements Callback {
+    private EditText endpointEditText;
 
     private Spinner eventTypeSpinner;
     private Spinner eventActionSpinner;
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText extensionsEditText;
     private ObjectBoxManager objectBoxManager;
     private Box<Event> eventBox;
+    public static final String EVENT = "ObjectBoxExample";
     private void showDateTimePickerDialog(final EditText editText) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -75,11 +83,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ObjectBox.init(this);
         setContentView(R.layout.activity_main);
 
         objectBoxManager = ObjectBoxManager.getInstance(this);
         eventBox = objectBoxManager.getEventBox();
-
+        endpointEditText = findViewById(R.id.edit_text_endpoint);
         eventTypeSpinner = findViewById(R.id.spinner_event_type);
         eventActionSpinner = findViewById(R.id.spinner_event_action);
         idEditText = findViewById(R.id.edit_text_id);
@@ -104,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, StartActivity.class);
                 startActivity(intent);
-                finish(); // Optional: Call finish() to close the MainActivity and prevent it from being shown when the user presses the back button
+                finish();// Optional: Call finish() to close the MainActivity and prevent it from being shown when the user presses the back button
+                Box<Event> eventBox = get().boxFor(Event.class);
+                BoxStore boxStore = eventBox.getStore();
+                boxStore.removeAllObjects();
             }
         });
         generateIdButton.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     // All fields have valid input, proceed with saving
                     Event event = createEventObject();
                     eventBox.put(event);
-                    showToast("Event saved successfully!");
+                    sendEventToEndpoint("https://public.epcat.de/","text");
                     Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
                     startActivity(intent);
                 } else {
@@ -237,7 +249,50 @@ public class MainActivity extends AppCompatActivity {
             showToast("ID field is empty. Please enter a value before transforming.");
         }
     }
+    private void sendEventToEndpoint(String endpoint, String xmlContent) {
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(MediaType.parse("text/xml"), xmlContent);
+        Request request = new Request.Builder()
+                .url(endpoint)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast("Event sent successfully to the endpoint.");
+                        }
+                    });
+                } else {
+                    final int responseCode = response.code();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast("Failed to send event to the endpoint. Server returned: " + responseCode);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showToast("Failed to send event to the endpoint.");
+                    }
+                });
+            }
+        });
+    }
+
+
     private void generateEPCISEvent() {
+        String endpoint = endpointEditText.getText().toString();
         // Retrieve user input from EditText fields
         String eventType = eventTypeSpinner.getSelectedItem().toString();
         String action = eventActionSpinner.getSelectedItem().toString();
@@ -270,6 +325,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             showToast("Error occurred while saving the XML file.");
         }
+        sendEventToEndpoint(endpoint, xmlContent);
     }
     private boolean isInputValid() {
         // Check if all fields have non-empty input
