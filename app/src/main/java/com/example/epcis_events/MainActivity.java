@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements Callback {
                     String eventContent = String.valueOf(event);
                     eventBox.put(event);
                     sendEventToEndpoint(endpoint,eventContent);
+                    showToast("event saved successfully!");
                     Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
                     startActivity(intent);
                 } else {
