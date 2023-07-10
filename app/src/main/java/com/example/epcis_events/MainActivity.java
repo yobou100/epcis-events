@@ -130,10 +130,12 @@ public class MainActivity extends AppCompatActivity implements Callback {
             @Override
             public void onClick(View v) {
                 if (isInputValid()) {
+                    String endpoint = String.valueOf(findViewById(R.id.edit_text_endpoint));
                     // All fields have valid input, proceed with saving
                     Event event = createEventObject();
+                    String eventContent = String.valueOf(event);
                     eventBox.put(event);
-                    sendEventToEndpoint("https://public.epcat.de/","text");
+                    sendEventToEndpoint(endpoint,eventContent);
                     Intent intent = new Intent(MainActivity.this, SuccessActivity.class);
                     startActivity(intent);
                 } else {
@@ -277,7 +279,6 @@ public class MainActivity extends AppCompatActivity implements Callback {
                     });
                 }
             }
-
             @Override
             public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
                 runOnUiThread(new Runnable() {
@@ -289,8 +290,6 @@ public class MainActivity extends AppCompatActivity implements Callback {
             }
         });
     }
-
-
     private void generateEPCISEvent() {
         String endpoint = endpointEditText.getText().toString();
         // Retrieve user input from EditText fields
